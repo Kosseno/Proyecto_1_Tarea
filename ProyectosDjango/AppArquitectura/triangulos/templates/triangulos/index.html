@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Triángulos</title>
+    <link rel="stylesheet" href="{% static 'triangulos/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Triángulos Rectángulos</h1>
+        </header>
+
+        <main class="content">
+            <form method="POST" action="{% url 'calculadora' %}" class="form-triangulo">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="base">Base (cm):</label>
+                    <input 
+                        type="number" 
+                        id="base" 
+                        name="base" 
+                        step="0.01" 
+                        min="0.01"
+                        placeholder="Ingresa la base del triángulo"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="altura">Altura (cm):</label>
+                    <input 
+                        type="number" 
+                        id="altura" 
+                        name="altura" 
+                        step="0.01" 
+                        min="0.01"
+                        placeholder="Ingresa la altura del triángulo"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn-submit">Calcular</button>
+            </form>
+
+            {% if error %}
+                <div class="alert alert-error">
+                    <strong>Error:</strong> {{ error }}
+                </div>
+            {% endif %}
+
+            {% if resultado %}
+                <div class="resultado-box">
+                    <h2>Resultados</h2>
+                    <div class="resultado-grid">
+                        <div class="resultado-item">
+                            <span class="label">Base:</span>
+                            <span class="valor">{{ resultado.base }} cm</span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="label">Altura:</span>
+                            <span class="valor">{{ resultado.altura }} cm</span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="label">Área:</span>
+                            <span class="valor">{{ resultado.area }} cm²</span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="label">Hipotenusa:</span>
+                            <span class="valor">{{ resultado.hipotenusa }} cm</span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="label">Perímetro:</span>
+                            <span class="valor">{{ resultado.perimetro }} cm</span>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </main>
+
+    </div>
+</body>
+</html>
